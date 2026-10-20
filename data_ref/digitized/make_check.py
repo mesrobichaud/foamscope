@@ -2,11 +2,12 @@
 """
 make_check.py -- draw digitized points over the figure they were read from.
 
-Reads a digitized CSV (with pixel_x and pixel_y columns, and optionally a
-confidence column) and the source image named in its header, and writes a copy
-of the image with every point marked by a cross and numbered by its row in the
-CSV (0 = first data row). Cross colour shows the confidence: green high, orange
-medium, red low. Points without a confidence column are drawn green.
+Reads a digitized CSV (with pixel_x and pixel_y columns, and optionally point
+and confidence columns) and the source image named in its header, and writes a
+copy of the image with every point marked by a cross and numbered by its point
+column (by its row in the CSV, 0 = first data row, if there is no point column).
+Cross colour shows the confidence: green high, orange medium, red low. Points
+without a confidence column are drawn green.
 
 The output has the same size as the source image and is not cropped or scaled,
 so a pixel position read in an image editor (e.g. GIMP) is the same pixel
@@ -61,6 +62,8 @@ def make_check(csv_path, image_path=None, out_path=None):
     out_path = Path(out_path) if out_path else Path(__file__).parent / "digitization-checks" / f"{csv_path.stem}-check.png"
 
     data = pd.read_csv(csv_path, comment="#")
+    if "point" in data.columns:
+        data = data.set_index("point")
     for column in ("pixel_x", "pixel_y"):
         if column not in data.columns:
             raise SystemExit(f"{csv_path} has no {column} column")
@@ -70,14 +73,14 @@ def make_check(csv_path, image_path=None, out_path=None):
     image = Image.open(image_path).convert("RGB")      # same size as the source: pixels match the CSV
     draw = ImageDraw.Draw(image)
     font = ImageFont.load_default(size=FONT_SIZE)
-    for i, row in data.iterrows():
+    for point, row in data.iterrows():
         x, y = row["pixel_x"], row["pixel_y"]
         if pd.isna(x) or pd.isna(y):
             continue
         colour = COLOURS.get(str(row["confidence"]), OTHER)
         draw.line([(x - ARM, y), (x + ARM, y)], fill=colour, width=WIDTH)
         draw.line([(x, y - ARM), (x, y + ARM)], fill=colour, width=WIDTH)
-        draw.text((x + ARM + 2, y - ARM - FONT_SIZE), str(i), fill=LABEL, font=font)
+        draw.text((x + ARM + 2, y - ARM - FONT_SIZE), str(point), fill=LABEL, font=font)
 
     image.save(out_path)
     return out_path
