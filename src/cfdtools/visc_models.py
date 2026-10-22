@@ -125,6 +125,20 @@ MKM5_OWEN2020 = {   # Schenkel and Halliday's (2020) refit, as printed in Owen e
     "a": 0.0, "b": 8.78084, "c": 2.82354, "beta": 16.27775, "lam": 1252.64407, "nu": 0.14275, "nu_g": 2,
     "hct_star": 0.95, "hct_st": 0.20,
 }
+MKM5_SCHENKEL2020 = {   # Schenkel and Halliday (2020), arXiv 2004.12380, Table 1: fitted to Brooks, mu_p 1.23 mPa s.
+                        # beta and lam differ from the Owen et al. printing (16.28, 1253); hct_star and hct_st are not in
+                        # the table and are taken from MKM5_OWEN2020.
+    "a": 0.0, "b": 8.781, "c": 2.824, "beta": 16.44, "lam": 1296.0, "nu": 0.1427, "nu_g": 2,
+    "hct_star": 0.95, "hct_st": 0.20,
+}
+MKM5_HAEMOFOAM = {   # Schenkel and Halliday's own code, haemoFoam (github.com/TS-CUBED/haemoFoam, main, checked 2026-10-22):
+                     # tutorial_cases/carotid_transient_coarse_tet/constant/transportProperties, Krieger5Coeffs, with
+                     # mu_p 1.23 mPa s. Krieger5/Krieger5.C applies the shear-thinning term at every hematocrit (no
+                     # threshold), and Hcrit is 0.98: probably the critical hematocrit the published constants were fitted
+                     # with (Owen et al. use 0.95). Against Brooks (25 C): 33 % RMS, 2.2 cP RMS; too high at high shear.
+    "a": 0.0, "b": 8.781, "c": 2.824, "beta": 16.1, "lam": 1206.0, "nu": 0.1427, "nu_g": 2,
+    "hct_star": 0.98, "hct_st": 0.0,
+}
 MKM5_BROOKS_REFIT = {   # This project: fitted to all of Brooks's points (25 C) in log10(viscosity), mu_p 1.45 mPa s
                         # (estimated), hct_st 0.20, a 0. Use with the blood's own plasma viscosity, T = None.
     "a": 0.0, "b": 4.20516, "c": 1.89526, "beta": 4.61706, "lam": 6.07412, "nu": 0.166459, "nu_g": 2,
@@ -136,8 +150,8 @@ MKM5_CHIEN37_FIT = {    # This project: fitted at 37 C to Chien et al. (1966) Fi
     "a": 0.0, "b": 7.1534, "c": 3.60829, "beta": 6.30222, "lam": 15.9699, "nu": 0.124432, "nu_g": 2,
     "hct_star": 0.99, "hct_st": 0.0,
 }
-MKM5_SETS = {"hund2017": MKM5_HUND2017, "owen2020": MKM5_OWEN2020, "brooks_refit": MKM5_BROOKS_REFIT,
-             "chien37_fit": MKM5_CHIEN37_FIT}
+MKM5_SETS = {"hund2017": MKM5_HUND2017, "owen2020": MKM5_OWEN2020, "schenkel2020": MKM5_SCHENKEL2020,
+             "haemofoam": MKM5_HAEMOFOAM, "brooks_refit": MKM5_BROOKS_REFIT, "chien37_fit": MKM5_CHIEN37_FIT}
 
 
 def temp_correction(T, b_t=5.95, T_ref=25.0):
