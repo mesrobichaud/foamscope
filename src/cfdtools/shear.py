@@ -144,7 +144,8 @@ def plot_cdf(ax, samples, label=None, **kwargs):
     rate, w = samples.shear_rate[order], samples.weight[order]
     line, = ax.step(rate, np.cumsum(w) / w.sum(), where="post", label=label, **kwargs)
     ax.set_xscale("log")
-    ax.set_ylim(0, 1)
+    if ax.get_yscale() == "linear":
+        ax.set_ylim(0, 1)
     ax.set_xlabel(r"Shear rate $\dot\gamma$ (s$^{-1}$)")
     ax.set_ylabel("Cumulative fraction")
     return line

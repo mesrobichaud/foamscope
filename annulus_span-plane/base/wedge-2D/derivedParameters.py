@@ -22,10 +22,11 @@ nu_table = ""
 if viscosity_model == "newtonian":
     nu = units.kinematic_viscosity(mu_mPa_s, rho_kg_m3)
 elif viscosity_model in ("quemada_newtonian", "quemada"):
-    mu_ref_mPa_s = float(blood.quemada(hct, gamma_ref))
+    mu_plasma_mPa_s = blood.MU_PLASMA_MPA_S * blood.temp_correction(temperature_C)
+    mu_ref_mPa_s = float(blood.quemada(hct, gamma_ref, quemada_set, mu_plasma=mu_plasma_mPa_s))
     nu = units.kinematic_viscosity(mu_ref_mPa_s, rho_kg_m3)
     if viscosity_model == "quemada":
-        nu_table = blood.openfoam_nu_table(hct, rho_kg_m3)
+        nu_table = blood.openfoam_nu_table(hct, rho_kg_m3, variant=quemada_set, mu_plasma=mu_plasma_mPa_s)
 else:
     raise ValueError(f"unknown viscosity_model {viscosity_model!r}; "
                      "use newtonian, quemada_newtonian or quemada")

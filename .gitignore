@@ -2,6 +2,7 @@
 **/.DS_Store
 **/__pycache__/
 .DS_Store
+
 # Generated OpenFOAM runs -- rebuild from base/ + studies/
 */cases/*
 !*/cases/.gitkeep
@@ -16,13 +17,16 @@
 
 # hiding notebooks relevant to my own work 
 full-geometry/
-design-deviations.ipynb
+physical-analysis/
 geometry/full3d.py
 models/
 data_ref/figures/
 data_ref/digitized/digitization-checks/
 **/post/
 **/studies/
+
+# config 
+.claude/
 
 # Hiding license temporarily 
 LICENSE

@@ -1,1 +1,1 @@
-"""cfdtools -- helpers shared by every case-group under CFD/."""
+"""cfdtools -- helpers shared by every base case under CFD/."""

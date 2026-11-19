@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cfdtools"
 version = "0.1.0"
-description = "Helpers shared across the CFD case-groups"
+description = "Helpers shared by the CFD base cases"
 license = "MIT"
 requires-python = ">=3.10"
 dependencies = [

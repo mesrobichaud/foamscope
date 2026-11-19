@@ -27,13 +27,18 @@ bump_z              1.0;        // axial clustering across the bottom gap; <1 cl
 // --- Fluid ------------------------------------------------------------------
 // viscosity_model:
 //   newtonian          constant viscosity mu_mPa_s
-//   quemada_newtonian  constant viscosity from the Quemada (Das) model at hct
-//                      and the shear rate at the bob wall (mu_mPa_s not used)
-//   quemada            shear-thinning: Quemada (Das) at hct, as a
+//   quemada_newtonian  constant viscosity from the Quemada model (quemada_set) at
+//                      hct and the shear rate at the bob wall (mu_mPa_s not used)
+//   quemada            shear-thinning: Quemada model (quemada_set) at hct, as a
 //                      strainRateFunction table (mu_mPa_s not used)
 viscosity_model     newtonian;
 mu_mPa_s            3.5;        // dynamic viscosity (newtonian only)
 hct                 0.45;       // hematocrit as a fraction (quemada models only)
+quemada_set         das;        // Quemada parameter set (quemada models only): a key of
+                                //   cfdtools.visc_models.QUEMADA_SETS, e.g. das, schenkel2020
+temperature_C       25.0;       // blood temperature (quemada models only): the plasma
+                                //   viscosity (1.23 mPa s at 25 C) is scaled by
+                                //   visc_models.temp_correction; 25 = no correction
 rho_kg_m3           1050.0;     // density; for blood about 1025 + 75*hct
 
 // --- Operating point --------------------------------------------------------
