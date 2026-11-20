@@ -1,32 +1,21 @@
-**/case/
 **/.DS_Store
 **/__pycache__/
-.DS_Store
 
 # Generated OpenFOAM runs -- rebuild from base/ + studies/
-*/cases/*
-!*/cases/.gitkeep
+**/cases/*
+!**/cases/.gitkeep
 
 # pip install -e .
 *.egg-info/
 
-# Meshes -- regenerate with the builders in */geometry/
+# Meshes -- regenerate with the builders in examples/geometry/
 *.msh
+
 # Editor setup (machine-specific: conda + macOS openfoam app)
 .vscode/
 
-# hiding notebooks relevant to my own work 
-full-geometry/
-physical-analysis/
-geometry/full3d.py
-models/
-data_ref/figures/
-data_ref/digitized/digitization-checks/
-**/post/
-**/studies/
-
-# config 
+# Local Claude Code settings
 .claude/
 
-# Hiding license temporarily 
+# Hiding license temporarily
 LICENSE
