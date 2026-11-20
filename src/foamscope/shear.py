@@ -1,7 +1,7 @@
 """
 shear.py -- distribution of shear rate in an OpenFOAM case, in the fluid volume and on the walls.
 
-    from cfdtools import shear
+    from foamscope import shear
 
     shear.write_fields(case)                  # once per case: OpenFOAM writes grad(U) and the cell volumes V
     vol = shear.volume_samples(case)          # shear rate of every cell, weighted by cell volume
@@ -25,7 +25,7 @@ from typing import NamedTuple
 
 import numpy as np
 
-from cfdtools import post
+from foamscope import post
 
 GRAD = "grad(U)"
 VOLUME = "V"

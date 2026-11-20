@@ -26,7 +26,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from cfdtools import post
+from foamscope import post
 
 
 def couette_profile(xi, Ri, Ro):

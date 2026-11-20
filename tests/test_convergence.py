@@ -1,8 +1,8 @@
-"""cfdtools.convergence.gci against the worked example of Celik et al. (2008)."""
+"""foamscope.convergence.gci against the worked example of Celik et al. (2008)."""
 
 import pytest
 
-from cfdtools.convergence import gci
+from foamscope.convergence import gci
 
 # Celik et al. (2008), J. Fluids Eng. 130, 078001, Table 1, first column: 2D meshes of
 # 18000, 8000 and 4500 cells. gci takes them coarse to fine.

@@ -2,10 +2,10 @@
 pv.py -- open a case in ParaView with the publication view set up, or
 save that view as an image without opening a window.
 
-    python -m cfdtools.pv                          # case = current folder
-    python -m cfdtools.pv cases/smoke              # ParaView window
-    python -m cfdtools.pv cases/smoke --save       # image, no window
-    python -m cfdtools.pv cases/smoke --field p --time 0.1 --range 0 0.1 -o fig.png
+    python -m foamscope.pv                          # case = current folder
+    python -m foamscope.pv cases/smoke              # ParaView window
+    python -m foamscope.pv cases/smoke --save       # image, no window
+    python -m foamscope.pv cases/smoke --field p --time 0.1 --range 0 0.1 -o fig.png
 
 The view itself is defined in paraview_view.py, which runs inside ParaView.
 (This module is not called paraview.py: ParaView would import it in place of

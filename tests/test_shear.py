@@ -1,9 +1,9 @@
-"""cfdtools.shear: the shear rate of known velocity gradients, and weighted statistics of hand-built samples."""
+"""foamscope.shear: the shear rate of known velocity gradients, and weighted statistics of hand-built samples."""
 
 import numpy as np
 import pytest
 
-from cfdtools.shear import Samples, distribution, fraction_below, quantiles, shear_rate
+from foamscope.shear import Samples, distribution, fraction_below, quantiles, shear_rate
 
 
 def samples(rates, weights):

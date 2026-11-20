@@ -1,6 +1,6 @@
-# cfdtools
+# foamscope
 
-`cfdtools` is a Python package with tools for OpenFOAM cases: live plots of a
+`foamscope` is a Python package with tools for OpenFOAM cases: live plots of a
 running case, ParaView and matplotlib figures, shear-rate distributions,
 mesh-convergence checks and blood viscosity models. It is for OpenFOAM users
 who analyse their results in Python. The repository also has a worked example
@@ -79,7 +79,7 @@ foam-monitor cases/<name> --save m.png # save one image and exit
 foam-monitor cases                     # a folder of cases: show the running one
 ```
 
-`foam-monitor` is the same as `python -m cfdtools.monitor`. With no path, it
+`foam-monitor` is the same as `python -m foamscope.monitor`. With no path, it
 uses the current folder. The path can be relative to wherever you run the
 monitor. For a steady solver, `-n` counts iterations.
 
@@ -114,20 +114,20 @@ foam-pv cases/<name> --save          # image only, no window: cases/<name>/figur
 foam-pv cases/<name> --save --field p --time 0.1 --range 0 0.1 --size 3000 2000 -o fig.png
 ```
 
-`foam-pv` is the same as `python -m cfdtools.pv`. It looks for ParaView in
+`foam-pv` is the same as `python -m foamscope.pv`. It looks for ParaView in
 `$PARAVIEW_BIN` (a folder containing `paraview` and `pvbatch`), then on the
 `PATH`, then in `/Applications/ParaView*.app` on macOS. The view is defined in
-`src/cfdtools/paraview_view.py`, which runs in ParaView's own Python.
+`src/foamscope/paraview_view.py`, which runs in ParaView's own Python.
 
 ### Read results and draw figures
 
-`cfdtools.post` reads a case through pyvista and draws fields with
+`foamscope.post` reads a case through pyvista and draws fields with
 matplotlib. `plot_field` draws each cell of a 2D mesh as a filled polygon, so
 the figure shows the real cells with no interpolation.
 
 ```python
 import matplotlib.pyplot as plt
-from cfdtools import post
+from foamscope import post
 
 mesh, t = post.read_case("cases/<name>")            # latest saved time
 post.use_style()
@@ -157,12 +157,12 @@ slightly below the wall speed. Use cell values when that matters.
 
 ### Shear-rate distributions
 
-`cfdtools.shear` gives the distribution of shear rate in the fluid volume,
+`foamscope.shear` gives the distribution of shear rate in the fluid volume,
 weighted by cell volume, and on the walls, weighted by face area.
 
 ```python
 import matplotlib.pyplot as plt
-from cfdtools import shear
+from foamscope import shear
 
 case = "cases/<name>"
 shear.write_fields(case)                  # once per case: runs postProcess to write grad(U) and the cell volumes V
@@ -190,7 +190,7 @@ postProcess -case <case> -funcs '(grad(U) writeCellVolumes)' -latestTime
 ### Mesh convergence
 
 ```python
-from cfdtools.convergence import gci
+from foamscope.convergence import gci
 
 r = gci([1.0240, 1.0105, 1.0046], [6600, 14850, 33412])    # one quantity and the cell count on each mesh, coarse to fine
 r["p"], r["extrapolated"], r["gci_fine"], r["oscillatory"]
@@ -208,7 +208,7 @@ unreliable. Add a finer mesh in that case.
 
 ```python
 import numpy as np
-from cfdtools import visc_models as vm
+from foamscope import visc_models as vm
 
 g = np.logspace(-1, 3, 50)               # shear rate, 1/s
 vm.quemada(0.45, g)                      # Quemada with the Das coefficients, mPa s
@@ -237,12 +237,12 @@ vm.carreau(g)                            # Carreau fit compiled by Cho and Kense
 
 ### Unit conversion
 
-`cfdtools.units` converts lab units to SI, so parameter files can keep the
+`foamscope.units` converts lab units to SI, so parameter files can keep the
 units the values are measured in. The example's `derivedParameters.py` uses
 it.
 
 ```python
-from cfdtools import units
+from foamscope import units
 
 units.rpm_to_rad_s(100)                 # 10.47 rad/s
 units.kinematic_viscosity(3.5, 1050)    # nu in m^2/s, from mPa s and kg/m^3
@@ -478,7 +478,7 @@ core.
 ### 9. Make figures
 
 ParaView is for looking at results. For figures in a paper, use the scripts
-in `post/`, which use `cfdtools.post`:
+in `post/`, which use `foamscope.post`:
 
 ```bash
 python post/couette_figure.py cases/<name>                 # writes cases/<name>/figures/couette.pdf and .png
@@ -494,7 +494,7 @@ foam-pv cases/<name> --save                                # ParaView image, cas
   cell values against the analytical Couette solution. For an eccentric case,
   it plots the profiles at the narrowest and widest gap.
 
-`post/post_examples.ipynb` shows each `cfdtools.post` function on an
+`post/post_examples.ipynb` shows each `foamscope.post` function on an
 annulus-2D case, including time histories from `postProcessing/`. Set `CASE`
 in its first code cell to a case you have run. To run the notebook, install
 the kernel once with `pip install -e ".[notebook]"`, then select the

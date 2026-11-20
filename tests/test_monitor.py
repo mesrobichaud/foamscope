@@ -1,8 +1,8 @@
-"""cfdtools.monitor on small postProcessing trees laid out the way OpenFOAM writes them."""
+"""foamscope.monitor on small postProcessing trees laid out the way OpenFOAM writes them."""
 
 import os
 
-from cfdtools.monitor import NOISE_RATIO, active_case, find_series, read_dat, select
+from foamscope.monitor import NOISE_RATIO, active_case, find_series, read_dat, select
 
 HEADER = "# Moment\n# CofR : (0 0 0)\n#\n# Time\ttotal_x\ttotal_y\ttotal_z\n"
 

@@ -1,7 +1,7 @@
 """
 post.py -- read OpenFOAM results and draw publication figures with matplotlib.
 
-    from cfdtools import post
+    from foamscope import post
 
     mesh, t = post.read_case("cases/smoke")             # latest saved time
     params = post.case_parameters("cases/smoke")        # values the case was built with

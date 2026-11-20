@@ -46,7 +46,7 @@ runTimeModifiable true;
 
 functions
 {
-    // Initial residuals per time step, for python -m cfdtools.monitor.
+    // Initial residuals per time step, for python -m foamscope.monitor.
     residuals
     {
         type            solverInfo;

@@ -3,7 +3,7 @@
 # the templates can use. Temporary names are deleted at the end so they don't
 # leak into the parameter record.
 
-from cfdtools import units
+from foamscope import units
 
 Ri = Ri_mm * units.MM
 Ro = Ro_mm * units.MM

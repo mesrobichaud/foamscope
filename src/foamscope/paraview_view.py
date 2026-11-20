@@ -4,8 +4,8 @@ paraview_view.py -- ParaView view of a 2D case, run inside ParaView's Python.
 Do not run this file directly; use the launcher, which finds ParaView and
 passes the case:
 
-    python -m cfdtools.pv cases/smoke            # ParaView window
-    python -m cfdtools.pv cases/smoke --save     # image, no window
+    python -m foamscope.pv cases/smoke            # ParaView window
+    python -m foamscope.pv cases/smoke --save     # image, no window
 
 Sets a white background, parallel projection, no orientation axes, flat
 colours, the Cool to Warm colour map and a colour bar, and looks at
@@ -13,7 +13,7 @@ the mesh along its thin direction.
 
 Options come from the command line (pvbatch) or from the PV_CASE and
 PV_ARGS environment variables (ParaView window, which cannot take script
-arguments). This file cannot import cfdtools: ParaView's Python does not
+arguments). This file cannot import foamscope: ParaView's Python does not
 have it installed.
 """
 

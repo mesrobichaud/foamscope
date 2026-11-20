@@ -5,11 +5,11 @@ A stand-in for OpenFOAM's foamMonitor, which needs gnuplot's x11 terminal and
 GNU coreutils and so does not run on macOS as shipped. Run it in a second
 terminal while the solver runs:
 
-    python -m cfdtools.monitor cases/smoke
-    python -m cfdtools.monitor cases/smoke --refresh 2
-    python -m cfdtools.monitor cases/smoke --save monitor.png   # one shot, no window
-    python -m cfdtools.monitor cases/rpm_sweep                  # follow the running case of a sweep
-    python -m cfdtools.monitor cases/smoke -n 2000              # only the last 2000 iterations
+    python -m foamscope.monitor cases/smoke
+    python -m foamscope.monitor cases/smoke --refresh 2
+    python -m foamscope.monitor cases/smoke --save monitor.png   # one shot, no window
+    python -m foamscope.monitor cases/rpm_sweep                  # follow the running case of a sweep
+    python -m foamscope.monitor cases/smoke -n 2000              # only the last 2000 iterations
 
 Every function object that writes a .dat file gets its own panel. solverInfo
 files are shown as initial residuals on a log scale; everything else as each

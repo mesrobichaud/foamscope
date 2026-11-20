@@ -1,7 +1,7 @@
 """
 convergence.py -- mesh-independence checks.
 
-    from cfdtools.convergence import gci
+    from foamscope.convergence import gci
 
     r = gci([T_coarse, T_medium, T_fine], [6600, 14850, 33500])
     r["p"], r["extrapolated"], r["gci_fine"]
