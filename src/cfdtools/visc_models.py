@@ -305,18 +305,31 @@ def couette_wall_shear_rate(omega, Ri, Ro):
     return 2.0 * omega * Ro**2 / (Ro**2 - Ri**2)
 
 
-def openfoam_nu_table(hct, rho, gamma_min=1e-3, gamma_max=1e5, per_decade=20, **quemada_kw):
-    """Kinematic viscosity table for OpenFOAM's strainRateFunction model.
+def strain_rate_function_table(mu, rho, gamma_min=1e-3, gamma_max=1e5, per_decade=20):
+    """Kinematic viscosity table for OpenFOAM's strainRateFunction model, from any viscosity function.
 
-    Returns a one-line OpenFOAM list "((g1 nu1) (g2 nu2) ...)" of shear rate
-    (1/s) and kinematic viscosity (m^2/s), log-spaced. OpenFOAM interpolates
-    linearly between points and clamps outside the range, which is harmless
-    here because the Quemada viscosity is finite as the shear rate tends to 0.
+    mu         : function of shear rate (1/s, a NumPy array) that returns the dynamic viscosity in mPa s,
+                 e.g. lambda g: mkm5(0.45, g, T=37)
+    rho        : density, kg/m^3
+    gamma_min, gamma_max : shear-rate range of the table, 1/s
+    per_decade : points per decade of shear rate
+    Returns a one-line OpenFOAM list "((g1 nu1) (g2 nu2) ...)" of shear rate (1/s) and kinematic viscosity
+    (m^2/s), log-spaced. OpenFOAM interpolates linearly between points and clamps outside the range: below
+    gamma_min the viscosity stays at its value at gamma_min, and above gamma_max at its value at gamma_max.
+    Raises ValueError if mu returns NaN anywhere in the range.
     """
     decades = np.log10(gamma_max) - np.log10(gamma_min)
     gamma = np.logspace(np.log10(gamma_min), np.log10(gamma_max), int(round(decades * per_decade)) + 1)
-    mu = quemada(hct, gamma, **quemada_kw)
-    if np.any(np.isnan(mu)):
-        raise ValueError(f"the Quemada model is undefined for hematocrit {hct}")
-    nu = mu * 1e-3 / rho
+    nu = mu(gamma) * 1e-3 / rho
+    if np.any(np.isnan(nu)):
+        raise ValueError(f"the viscosity is undefined (NaN) at shear rate {gamma[np.isnan(nu)][0]:.6g} 1/s")
     return "(" + " ".join(f"({g:.6g} {n:.6g})" for g, n in zip(gamma, nu)) + ")"
+
+
+def openfoam_nu_table(hct, rho, gamma_min=1e-3, gamma_max=1e5, per_decade=20, **quemada_kw):
+    """strain_rate_function_table for the Quemada viscosity at hematocrit hct; quemada_kw are passed to quemada.
+
+    Clamping outside the range is harmless here because the Quemada viscosity is finite as the shear rate tends
+    to 0.
+    """
+    return strain_rate_function_table(lambda g: quemada(hct, g, **quemada_kw), rho, gamma_min, gamma_max, per_decade)
