@@ -49,9 +49,6 @@ def test_distribution_sums_to_one():
     assert cdf[-1] == pytest.approx(1.0)
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "distribution() clips rates below lo to lo, but the first edge np.logspace builds is "
-    "10**log10(lo), which for lo=5 is 5.000000000000001 > 5, so np.histogram drops those rates"))
 def test_distribution_counts_rates_below_lo_in_the_first_bin():
     s = samples([1, 10, 100], [1, 1, 1])
     fractions = bin_fractions(*distribution(s, lo=5)[:2])

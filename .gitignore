@@ -16,3 +16,6 @@
 
 # Local Claude Code settings
 .claude/
+
+# pytest
+.pytest_cache/

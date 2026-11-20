@@ -136,6 +136,7 @@ def distribution(samples, bins_per_decade=10, lo=None, hi=None):
     lo = lo or 10 ** np.floor(np.log10(positive.min()))
     hi = hi or 10 ** np.ceil(np.log10(rate.max()))
     edges = np.logspace(np.log10(lo), np.log10(hi), int(round(np.log10(hi / lo) * bins_per_decade)) + 1)
+    edges[0], edges[-1] = lo, hi          # logspace can round the end edges inward, dropping clipped rates
     counts, _ = np.histogram(np.clip(rate, lo, hi), bins=edges, weights=samples.weight)
     frac = counts / samples.weight.sum()
     density = frac / np.diff(np.log10(edges))
