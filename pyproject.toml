@@ -1,22 +1,28 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]     # 77 reads the SPDX license string below
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "cfdtools"
 version = "0.1.0"
-description = "Helpers shared by the CFD base cases"
+description = "Post-processing, plotting, and run-monitoring tools for OpenFOAM cases"
 license = "MIT"
 requires-python = ">=3.10"
 dependencies = [
-    "gmsh>=4.15,<5",      # Python API + bundled gmsh binary
-    "PyFoam>=2026.6",
+    "numpy",
     "matplotlib",         # cfdtools.monitor, cfdtools.post
-    "pyvista",            # cfdtools.post: reads OpenFOAM cases
+    "pyvista>=0.49",      # cfdtools.post: reads OpenFOAM cases; 0.49 adds UnstructuredGrid.cell_offsets
+    "PyFoam>=2026.6",     # cfdtools.post.case_parameters; 2023.7 fails to import on Python 3.12
 ]
 
 [project.optional-dependencies]
+examples = ["gmsh"]               # mesh builders in examples/geometry/: pip install -e ".[examples]"
 notebook = ["ipykernel"]          # run the example notebooks: pip install -e ".[notebook]"
+test = ["pytest"]
+
+[project.scripts]
+foam-monitor = "cfdtools.monitor:main"
+foam-pv = "cfdtools.pv:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
