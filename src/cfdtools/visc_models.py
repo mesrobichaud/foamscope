@@ -57,8 +57,9 @@ QUEMADA_SCHENKEL2020 = {   # Schenkel and Halliday (2020), arXiv 2004.12380, Tab
     "k0_form": "das", "k0": (0.06108, 0.04777), "k_inf": (1.803, -3.68, 2.608, -0.001667),
     "gamma_c": (-7.021, 34.45, -39.94, 14.09),
 }
-QUEMADA_BROOKS_REFIT = {   # This project: fitted to all of Brooks's points in log10(viscosity), mu_p 1.45 mPa s. Use with
-                           # the blood's own plasma viscosity. Undefined from hct 0.69 (zero shear) to 0.93 (high shear).
+QUEMADA_BROOKS_REFIT = {   # Refit by the package author to all of the points of Brooks et al. (1970), in log10(viscosity),
+                           # mu_p 1.45 mPa s; not taken from a published paper. Use with the blood's own plasma
+                           # viscosity. Undefined from hct 0.69 (zero shear) to 0.93 (high shear).
     "k0_form": "das", "k0": (0.355529, 0.0952074), "k_inf": (1.48847, -3.48745, 3.35818, -0.488494),
     "gamma_c": (-10.0091, 61.3094, -101.933, 53.7325),
 }
