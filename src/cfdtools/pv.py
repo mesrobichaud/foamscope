@@ -59,7 +59,7 @@ def find_executable(name):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(
-        prog="python -m cfdtools.pv",
+        prog="foam-pv",
         description="Open an OpenFOAM case in ParaView with a publication view, "
                     "or save that view as an image.",
     )

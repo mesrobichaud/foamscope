@@ -254,7 +254,7 @@ def draw(fig, path, ncols=1, last=None):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(
-        prog="python -m cfdtools.monitor",
+        prog="foam-monitor",
         description="Live plots of an OpenFOAM case's postProcessing/*.dat files.",
     )
     ap.add_argument("case", nargs="?", default=".",
