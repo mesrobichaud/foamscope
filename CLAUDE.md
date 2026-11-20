@@ -17,7 +17,7 @@ Use these terms. Do not say "case-group" or "rig". Call `cfdtools` "the package"
 OpenFOAM and PyFoam commands run in an OpenFOAM v2606 shell (openfoam.com release; on macOS, gerlero's openfoam-app, started with `openfoam`) with the Python environment active.
 
 ```bash
-pip install -e ".[test]"                  # the package (editable), gmsh, PyFoam, matplotlib, pyvista, pytest
+pip install -e ".[examples,test]"         # the package (editable), PyFoam, matplotlib, pyvista; gmsh (examples), pytest (test)
 pytest                                    # tests in tests/
 foam-monitor cases/<name>                 # live plots of postProcessing .dat files (python -m cfdtools.monitor)
 foam-pv cases/<name> [--save]             # ParaView publication view (python -m cfdtools.pv)

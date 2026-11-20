@@ -4,7 +4,7 @@
 // these per run with --parameter-file=... or --values-string="{...}" rather
 // than editing this file.
 
-// --- Rig geometry -----------------------------------------------------------
+// --- Geometry ---------------------------------------------------------------
 Ri_mm               5.5;       // inner (rotating bob) radius
 Ro_mm               6.35;       // outer (stationary cup) radius
 eccentricity_mm     0.0;        // bob axis offset along +x

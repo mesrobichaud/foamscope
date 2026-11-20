@@ -4,7 +4,7 @@
 set -e
 
 # Find the mesh builders: the first geometry/ folder in this directory or a
-# parent directory (currently CFD/geometry/).
+# parent directory (examples/geometry/ in this repository).
 root=$(pwd)
 while [ ! -d "$root/geometry" ]; do
     [ "$root" = / ] && { echo "no geometry/ directory above $(pwd)" >&2; exit 1; }

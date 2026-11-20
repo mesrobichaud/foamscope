@@ -28,15 +28,17 @@ root of this repository, in a new environment:
 
 ```bash
 conda create -n cfd python=3.12 && conda activate cfd    # or: python -m venv .venv && source .venv/bin/activate
-pip install -e .
+pip install -e ".[examples]"
 ```
 
-This installs gmsh, PyFoam, matplotlib, pyvista and the package, and adds the
-`foam-monitor` and `foam-pv` commands. The package is installed in editable
-mode, so changes under `src/` apply without reinstalling. Run `pip install -e .`
-again if `pyproject.toml` changes.
+This installs PyFoam, matplotlib, pyvista and the package, adds the
+`foam-monitor` and `foam-pv` commands, and, through the `examples` extra,
+installs gmsh for the mesh builder in `examples/geometry/`. Leave out
+`[examples]` (`pip install -e .`) if you only need the tools. The package is
+installed in editable mode, so changes under `src/` apply without
+reinstalling. Run the install again if `pyproject.toml` changes.
 
-Optional extras:
+Other extras:
 
 ```bash
 pip install -e ".[notebook]"    # Jupyter kernel, to run the example notebook
@@ -227,9 +229,11 @@ vm.carreau(g)                            # Carreau fit compiled by Cho and Kense
   `power_law_davies`.
 - `couette_wall_shear_rate(omega, Ri, Ro)` is the Newtonian shear rate at the
   rotating inner wall of a Couette gap.
-- The module also turns a viscosity function mu(shear rate) into the table of
-  shear rate and kinematic viscosity that OpenFOAM's `strainRateFunction`
-  viscosity model reads.
+- `strain_rate_function_table(mu, rho)` turns any viscosity function
+  mu(shear rate), in mPa s, into the table of shear rate and kinematic
+  viscosity that OpenFOAM's `strainRateFunction` viscosity model reads, e.g.
+  `strain_rate_function_table(lambda g: mkm5(0.45, g, T=37), 1050)`.
+  `openfoam_nu_table(hct, rho)` does the same for the Quemada model.
 
 ### Unit conversion
 
