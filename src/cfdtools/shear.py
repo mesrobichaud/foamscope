@@ -42,15 +42,20 @@ class Samples(NamedTuple):
 def write_fields(case, time="latest"):
     """Run OpenFOAM's postProcess on `case` to write grad(U) and the cell volumes V at one saved time.
 
-    time : "latest", or a saved time value. Needs the `openfoam` launcher (openfoam-app); otherwise run, in an
-    OpenFOAM shell:  postProcess -case <case> -funcs '(grad(U) writeCellVolumes)' -latestTime
+    time : "latest", or a saved time value. Runs postProcess from PATH (an OpenFOAM shell, after sourcing
+    OpenFOAM's etc/bashrc), or else through the `openfoam` launcher (openfoam-app on macOS). With neither, run in
+    an OpenFOAM shell:  postProcess -case <case> -funcs '(grad(U) writeCellVolumes)' -latestTime
     """
-    launcher = shutil.which("openfoam")
-    if launcher is None:
-        raise RuntimeError("openfoam launcher not found; run in an OpenFOAM shell: "
-                           f"postProcess -case {case} -funcs '(grad(U) writeCellVolumes)' -latestTime")
+    post_process, launcher = shutil.which("postProcess"), shutil.which("openfoam")
+    if post_process is not None:
+        cmd = [post_process]
+    elif launcher is not None:
+        cmd = [launcher, "postProcess"]
+    else:
+        raise RuntimeError("postProcess is not on PATH and the openfoam launcher was not found; run in an OpenFOAM "
+                           f"shell: postProcess -case {case} -funcs '(grad(U) writeCellVolumes)' -latestTime")
     when = ["-latestTime"] if time == "latest" else ["-time", str(time)]
-    cmd = [launcher, "postProcess", "-case", str(case), "-funcs", "(grad(U) writeCellVolumes)", *when]
+    cmd += ["-case", str(case), "-funcs", "(grad(U) writeCellVolumes)", *when]
     env = {**os.environ, "TERM": os.environ.get("TERM") or "dumb"}     # no terminal (e.g. a notebook)
     result = subprocess.run(cmd, capture_output=True, text=True, env=env)
     if result.returncode != 0:
